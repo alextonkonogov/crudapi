@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/alextonkonogov/crudapi/app/controller"
 	"github.com/alextonkonogov/crudapi/app/server"
 	"github.com/julienschmidt/httprouter"
@@ -17,6 +18,8 @@ func main() {
 
 	r := httprouter.New()
 	routes(r)
+
+	fmt.Println("service is working!")
 
 	err = http.ListenAndServe("localhost:5151", r)
 	if err != nil {
