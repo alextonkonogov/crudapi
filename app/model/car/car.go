@@ -1,4 +1,4 @@
-package model
+package car
 
 import (
 	"github.com/alextonkonogov/crudapi/app/server"

@@ -2,38 +2,22 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
-	"github.com/alextonkonogov/crudapi/app/model"
+	"github.com/alextonkonogov/crudapi/app/model/car"
 	"github.com/julienschmidt/httprouter"
 	"strconv"
 	"strings"
 
-	"html/template"
 	"net/http"
-	"path/filepath"
 )
 
 func GetCars(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	//получаем список всех пользователей
-	cars, err := model.GetAllCars()
+	cars, err := car.GetAllCars()
 	if err != nil {
 		http.Error(rw, err.Error(), 400)
 		return
 	}
 
-	//указываем пути к файлам с шаблонами
-	main := filepath.Join("public", "html", "cars.html")
-	common := filepath.Join("public", "html", "common.html")
-
-	//создаем html-шаблон
-	tmpl, err := template.ParseFiles(main, common)
-	if err != nil {
-		http.Error(rw, err.Error(), 400)
-		return
-	}
-
-	//исполняем именованный шаблон "users", передавая туда массив со списком пользователей
-	err = tmpl.ExecuteTemplate(rw, "cars", cars)
+	err = json.NewEncoder(rw).Encode(cars)
 	if err != nil {
 		http.Error(rw, err.Error(), 400)
 		return
@@ -50,7 +34,7 @@ func AddCar(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	car, err := model.NewCar(firmId, markId, litresVolume)
+	car, err := car.NewCar(firmId, markId, litresVolume)
 	if err != nil {
 		http.Error(rw, err.Error(), 400)
 		return
@@ -71,7 +55,7 @@ func AddCar(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func DeleteCar(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	carId := p.ByName("carId")
 
-	car, err := model.GetCarById(carId)
+	car, err := car.GetCarById(carId)
 	if err != nil {
 		http.Error(rw, err.Error(), 400)
 		return
@@ -110,9 +94,8 @@ func UpdateCar(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	car, err := model.GetCarById(carId)
+	car, err := car.GetCarById(carId)
 	if err != nil {
-		fmt.Println("here")
 		http.Error(rw, err.Error(), 400)
 		return
 	}
