@@ -1,6 +1,6 @@
 FROM debian
 RUN apt-get update
-RUN apt-get  upgrade
+RUN apt-get -y upgrade
 
 # Change TimeZone
 ENV TZ=Europe/Moscow

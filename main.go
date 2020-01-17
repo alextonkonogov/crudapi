@@ -21,7 +21,7 @@ func main() {
 
 	fmt.Println("service is working!")
 
-	err = http.ListenAndServe("localhost:5151", r)
+	err = http.ListenAndServe(":5151", r)
 	if err != nil {
 		log.Fatal(err)
 	}
