@@ -30,25 +30,35 @@ func initTables() (err error) {
 				id INT PRIMARY KEY AUTO_INCREMENT,
 				title VARCHAR(32) NOT NULL UNIQUE
 			);
-			CREATE TABLE IF NOT EXISTS marks
-			(
-				id INT PRIMARY KEY AUTO_INCREMENT,
-				title VARCHAR(32) NOT NULL UNIQUE,
-				firmId INT(11) NOT NULL,
-				FOREIGN KEY (firmId)  REFERENCES firms (Id)
-			);
 			CREATE TABLE IF NOT EXISTS cars
 			(
 				id INT PRIMARY KEY AUTO_INCREMENT,
 				firmId INT(11) NOT NULL,
-				markId INT(11) NOT NULL,
+				mark VARCHAR(32) NOT NULL,
 				litresVolume FLOAT(11) NOT NULL,
 				FOREIGN KEY (firmId)  REFERENCES firms (Id),
-				FOREIGN KEY (markId)  REFERENCES marks (Id)
+				UNIQUE KEY uniq_index (firmId, mark, litresVolume)
+			);
+			CREATE TABLE IF NOT EXISTS users
+			(
+				id INT PRIMARY KEY AUTO_INCREMENT,
+				login VARCHAR(32) NOT NULL UNIQUE,
+				password VARCHAR(32) NOT NULL,
+				name VARCHAR(32) NOT NULL,
+				surname VARCHAR(32) NOT NULL
+			);
+			CREATE TABLE IF NOT EXISTS users_rights
+			(
+				id INT PRIMARY KEY AUTO_INCREMENT,
+				userId INT(11) NOT NULL,
+				tableName VARCHAR(32) NOT NULL,
+				FOREIGN KEY (userId)  REFERENCES users (Id),
+				UNIQUE KEY uniq_index2 (userId, tableName)
 			);
 			INSERT IGNORE INTO firms (title) VALUES ('BMW'), ('Audi'), ('Toyota');
-			INSERT IGNORE INTO marks (title, firmId) VALUES ('X5', 1);
-			INSERT IGNORE INTO cars (markId, firmId, litresVolume) VALUES (1, 1, 6.6);`
+			INSERT IGNORE INTO cars (firmId, mark, litresVolume) VALUES (1, 'X5', 6.6);
+			INSERT IGNORE INTO users (login, password, name, surname) VALUES ('admin', '202cb962ac59075b964b07152d234b70', 'John', 'Snow');
+			INSERT IGNORE INTO users_rights (userId, tableName) VALUES (1, 'users');`
 	requests := strings.Split(query, ";")
 
 	for _, v := range requests {

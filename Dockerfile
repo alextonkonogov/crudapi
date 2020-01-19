@@ -8,4 +8,5 @@ ENV TZ=Europe/Moscow
 RUN rm -rf /var/cache/apk/*
 WORKDIR /application
 COPY main .
+ADD public /application/public/
 CMD ["./main" ]

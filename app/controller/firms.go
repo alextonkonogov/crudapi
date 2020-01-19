@@ -2,10 +2,12 @@ package controller
 
 import (
 	"encoding/json"
-	"github.com/alextonkonogov/crudapi/app/model/firm"
-	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"strings"
+
+	"github.com/julienschmidt/httprouter"
+
+	"github.com/alextonkonogov/crudapi/app/model/firm"
 )
 
 func GetFirms(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {

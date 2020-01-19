@@ -1,8 +1,6 @@
 package firm
 
-import (
-	"github.com/alextonkonogov/crudapi/app/server"
-)
+import "github.com/alextonkonogov/crudapi/app/server"
 
 type firm struct {
 	Id    int    `db:"id"`

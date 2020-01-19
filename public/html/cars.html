@@ -1,0 +1,33 @@
+{{define "cars"}}
+
+    <!doctype html>
+    <html lang="ru" class="h-100">
+    <head>
+        {{template "meta"}}
+        {{template "styles"}}
+    </head>
+    <body class="d-flex flex-column h-100">
+        <div class="container">
+            <h3 class="mt-3 text-center">Машины</h3>
+            <table class="table mt-3">
+                <th>id</th>
+                <th>Фирма</th>
+                <th>Марка</th>
+                <th>Объем литров</th>
+
+                {{range .}}
+                    <tr>
+                        <td>{{.Id}}</td>
+                        <td>{{.Firm}}</td>
+                        <td>{{.Mark}}</td>
+                        <td>{{.LitresVolume}}</td>
+                    </tr>
+                {{end}}
+
+            </table>
+        </div>
+        {{template "scripts"}}
+    </body>
+    </html>
+
+{{end}}
